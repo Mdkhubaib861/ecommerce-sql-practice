@@ -39,68 +39,7 @@ CREATE TABLE OrderItems (
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
-INSERT INTO Categories (CategoryID, CategoryName) VALUES 
-(1, 'Electronics'),
-(2, 'Clothing'),
-(3, 'Home & Kitchen'),
-(4, 'Books'),
-(5, 'Sports');
-
-INSERT INTO Products (ProductID, ProductName, Price, CategoryID) VALUES 
-(101, 'Smartphone', 500.00, 1),
-(102, 'Laptop', 1000.00, 1),
-(103, 'Wireless Mouse', 25.00, 1),
-(104, 'T-Shirt', 20.00, 2),
-(105, 'Jeans', 40.00, 2),
-(106, 'Jacket', 80.00, 2),
-(107, 'Blender', 60.00, 3),
-(108, 'Coffee Maker', 120.00, 3),
-(109, 'SQL Programming Guide', 35.00, 4),
-(110, 'Cricket Bat', 150.00, 5);
-
-INSERT INTO Customers (CustomerID, CustomerName, Email, City) VALUES 
-(1, 'Rahul Sharma', 'rahul@email.com', 'Mumbai'),
-(2, 'Priya Singh', 'priya@email.com', 'Delhi'),
-(3, 'Amit Kumar', 'amit@email.com', 'Pune'),
-(4, 'Neha Verma', 'neha@email.com', 'Bangalore'),
-(5, 'Rohit Gupta', 'rohit@email.com', 'Kolkata'),
-(6, 'Pooja Patel', 'pooja@email.com', 'Ahmedabad'),
-(7, 'Vikas Joshi', 'vikas@email.com', 'Jaipur'),
-(8, 'Anjali Mehta', 'anjali@email.com', 'Chennai'),
-(9, 'Karan Malhotra', 'karan@email.com', 'Hyderabad'),
-(10, 'Sneha Reddi', 'sneha@email.com', 'Bangalore');
-
-INSERT INTO Orders (OrderID, CustomerID, OrderDate) VALUES 
-(1001, 1, '2026-06-01'),
-(1002, 1, '2026-06-03'),
-(1003, 2, '2026-06-04'),
-(1004, 3, '2026-06-05'),
-(1005, 4, '2026-06-06'),
-(1006, 2, '2026-06-07'),
-(1007, 5, '2026-06-08'),
-(1008, 6, '2026-06-09'),
-(1009, 7, '2026-06-10'),
-(1010, 8, '2026-06-11'),
-(1011, 4, '2026-06-12'),
-(1012, 1, '2026-06-13');
-
-INSERT INTO OrderItems (OrderItemID, OrderID, ProductID, Quantity) VALUES 
-(1, 1001, 101, 1),
-(2, 1001, 103, 2),
-(3, 1002, 102, 1),
-(4, 1003, 104, 1),
-(5, 1004, 107, 1),
-(6, 1005, 109, 2),
-(7, 1006, 105, 3),
-(8, 1007, 110, 1),
-(9, 1008, 106, 1),
-(10, 1009, 108, 1),
-(11, 1010, 103, 1),
-(12, 1011, 101, 1),
-(13, 1012, 104, 2),
-(14, 1012, 109, 1),
-(15, 1006, 103, 1);
-
+ 
  INSERT INTO Categories (CategoryID, CategoryName) VALUES 
 (6, 'Toys & Games'),
 (7, 'Beauty & Personal Care'),
@@ -254,22 +193,46 @@ INSERT INTO OrderItems (OrderItemID, OrderID, ProductID, Quantity) VALUES
 (51, 1024, 208, 1),
 (52, 1025, 212, 2);
 
-SELECT 
-    Orders.OrderID, 
-    Orders.OrderDate, 
-    Customers.CustomerName, 
-    Customers.City
+SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName, Customers.City
 FROM Orders
 INNER JOIN Customers 
-    ON Orders.CustomerID = Customers.CustomerID;
+ON Orders.CustomerID = Customers.CustomerID;
     
-SELECT 
-    OrderItems.OrderID,
-    Products.ProductName,
-    OrderItems.Quantity,
-    Products.Price
+SELECT * FROM Customers 
+INNER JOIN Orders 
+ON Customers.OrderID = Orders.OrderID;
+
+SELECT OrderItems.OrderID,
+Products.ProductName,
+OrderItems.Quantity,
+Products.Price
 FROM OrderItems
 INNER JOIN Products 
-    ON OrderItems.ProductID = Products.ProductID
-WHERE OrderItems.OrderID = 101;
+ON OrderItems.ProductID = Products.ProductID;
+
+-- 1
+SELECT *
+FROM Customers c
+INNER JOIN Orders o 
+ON c.CustomerID = o.CustomerID;
+
+-- 2
+SELECT o.OrderID,o.OrderDate,c.CustomerName
+FROM Orders o
+INNER JOIN Customers c 
+ON o.CustomerID = c.CustomerID;
+
+-- 3
+SELECT p.ProductName,o.Quantity
+FROM Products p
+INNER JOIN OrderItems o ON p.ProductID = o.ProductID;
+-- 4
+SELECT c.CustomerName, o.OrderDate, oi.Quantity
+FROM Customers c
+INNER JOIN Orders o ON c.CustomerID = o.CustomerID
+INNER JOIN OrderItems oi ON o.OrderID = oi.OrderID;
+-- 5
+SELECT p.ProductName,cat.CategoryName
+FROM Products p
+INNER JOIN Categories cat ON p.CategoryID = cat.CategoryID;
 */
