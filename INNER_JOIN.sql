@@ -49,8 +49,47 @@ SELECT p.productName, od.Quantity
 FROM products AS p
 LEFT OUTER JOIN orderitems AS od
 ON p.productID = od.productID;
-*/
+
 -- Display all orders along with their customer names.
 SELECT o.OrderID, o.OrderDate, c.customerName
 FROM customers AS c RIGHT OUTER JOIN orders AS o
 ON c.CustomerID = o.CustomerID;
+
+SELECT * FROM categories;
+SELECT * FROM customers;
+SELECT * FROM orders;
+SELECT * FROM orders;
+SELECT * FROM products;
+
+
+-- Display all customers and all orders, including customers without orders and orders without
+-- matching customers.
+SELECT c.categoryname,p.productname
+FROM categories c LEFT OUTER JOIN products p
+oN c.categoryID = p.categoryID
+UNION
+SELECT c.categoryname,p.productname
+FROM categories c RIGHT OUTER JOIN products p
+oN c.categoryID = p.categoryID;
+
+-- Display all products and all categories, including products without categories and categories without
+-- products.
+
+SELECT p.productname, c.categoryname
+FROM products p LEFT OUTER JOIN categories c 
+ON p.categoryID = c.categoryID
+UNION
+SELECT p.productname, c.categoryname
+FROM products p RIGHT OUTER JOIN categories c 
+ON p.categoryID = c.categoryID;
+*/
+-- Display all products and their ordered quantities, including products that have never been ordered
+-- and order items without matching products.
+
+SELECT p.productname, oi.quantity
+FROM products p LEFT OUTER JOIN orderitems oi 
+ON p.productID = oi.productID
+UNION
+SELECT p.productname, oi.quantity
+FROM products p RIGHT OUTER JOIN orderitems oi 
+ON p.productID = oi.productID;
