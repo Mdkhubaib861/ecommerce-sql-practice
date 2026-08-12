@@ -66,3 +66,5 @@ FROM orderDetails
 WHERE DeliveryDate
 GROUP BY DATEDIFF(DeliveryDate, OrderDate);
 */
+SELECT MAX(price) AS highestPrice, MIN(price) AS lowestPrice
+FROM orderDetails;
