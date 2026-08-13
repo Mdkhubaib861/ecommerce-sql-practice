@@ -65,6 +65,12 @@ COUNT(orderID) AS TotalOrdersDelivered
 FROM orderDetails 
 WHERE DeliveryDate
 GROUP BY DATEDIFF(DeliveryDate, OrderDate);
-*/
+
 SELECT MAX(price) AS highestPrice, MIN(price) AS lowestPrice
+FROM orderDetails;
+*/
+SELECT SUM(price * qty) AS TotalRevenue,
+SUM(qty) AS TotalItemsSold,
+AVG(price) AS AverageUnitPrice,
+max(price) AS MaxUnitPrice
 FROM orderDetails;
