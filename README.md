@@ -1,35 +1,52 @@
 # 🛒 E-Commerce SQL Database & JOIN Practice
 
-This project is a complete, beginner-to-intermediate level practice repository designed to help understand relational databases, schema design, and SQL JOIN operations using an E-Commerce domain.
+This project is a complete practice repository designed to build and demonstrate practical knowledge of relational databases, schema design, subqueries, aggregate operations, and SQL JOINs using an E-Commerce domain.
 
 ---
 
 ## 📐 Database Schema & ER Diagram
 
-The database consists of 5 core tables linked with Primary Keys (PK) and Foreign Keys (FK):
+The database architecture consists of 5 core normalized tables linked via Primary Key (PK) and Foreign Key (FK) constraints:
 
-1. **`Categories`** (PK: `CategoryID`)
-2. **`Products`** (PK: `ProductID`, FK: `CategoryID`)
-3. **`Customers`** (PK: `CustomerID`)
-4. **`Orders`** (PK: `OrderID`, FK: `CustomerID`)
-5. **`OrderItems`** (PK: `OrderItemID`, FK: `OrderID`, FK: `ProductID`)
+* **Categories**: Holds product categorization information.
+* **Products**: Stores catalog items, pricing details, and maps each item to a category.
+* **Customers**: Contains user profiles and contact details.
+* **Orders**: Logs general order records tied to specific customers.
+* **OrderItems**: Bridge table mapping items and ordered quantities to specific order IDs.
 
 ### Visual ER Diagram
-```text
-+-------------------+       +-------------------+       +-------------------+
-|     Customers     |       |      Orders       |       |    OrderItems     |
-+-------------------+       +-------------------+       +-------------------+
-| PK  CustomerID    |<------+ PK  OrderID       |<------+ PK  OrderItemID   |
-|     CustomerName  |       | FK  CustomerID    |       | FK  OrderID       |
-|     Email         |       |     OrderDate     |       | FK  ProductID     |
-|     City          |       +-------------------+       |     Quantity      |
-+-------------------+                                   +-------------------+
-                                                                  |
-                                                                  |
-+-------------------+                                   +-------------------+
-|    Categories     |                                   |     Products      |
-+-------------------+       +-------------------+       +-------------------+
-| PK  CategoryID    |<------+ PK  CategoryID    |<------+ PK  ProductID     |
-|     CategoryName  |       |     ProductName   |       |     ProductName   |
-+-------------------+       |     Price         |       |     Price         |
-                            +-------------------+       +-------------------+
+
+```mermaid
+erDiagram
+    CUSTOMERS ||--o{ ORDERS : places
+    ORDERS ||--o{ ORDER_ITEMS : contains
+    PRODUCTS ||--o{ ORDER_ITEMS : includes
+    CATEGORIES ||--o{ PRODUCTS : belongs_to
+
+    CUSTOMERS {
+        int CustomerID PK
+        string CustomerName
+        string Email
+        string City
+    }
+    ORDERS {
+        int OrderID PK
+        int CustomerID FK
+        date OrderDate
+    }
+    ORDER_ITEMS {
+        int OrderItemID PK
+        int OrderID FK
+        int ProductID FK
+        int Quantity
+    }
+    PRODUCTS {
+        int ProductID PK
+        int CategoryID FK
+        string ProductName
+        decimal Price
+    }
+    CATEGORIES {
+        int CategoryID PK
+        string CategoryName
+    }
