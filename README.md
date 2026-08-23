@@ -16,6 +16,7 @@ The database architecture consists of 5 core normalized tables linked via Primar
 
 ### Visual ER Diagram
 
+
 ```mermaid
 erDiagram
     CUSTOMERS ||--o{ ORDERS : places
